@@ -12,7 +12,7 @@ import java.util.UUID;
 public class User implements UserComponent, Subject, Observer, Element {
     private UserGroup group;
     private final String ID;
-    private final String username;
+    private String username;
     private List<Observer> followers;
     private List<String> tweets;
     private List<String> feed;
@@ -33,6 +33,10 @@ public class User implements UserComponent, Subject, Observer, Element {
 
     public UserGroup getParentGroup() {
         return group;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public void getFeed() {

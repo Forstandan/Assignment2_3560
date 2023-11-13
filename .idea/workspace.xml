@@ -4,25 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="16c70c25-3cf7-41e3-af00-2021d826924d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Project2_3560.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Admin/Admin.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Driver.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Follow/Observer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Follow/Subject.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/UI/AdminUI.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/UI/Listeners/AppTreeModelListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/User/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/User/UserComponent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/User/UserGroup.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Visitor/Element.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Visitor/Visitor.java" afterDir="false" />
+    <list default="true" id="16c70c25-3cf7-41e3-af00-2021d826924d" name="Changes" comment="Update">
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/UI/CustomTreeCellRenderer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/UI/Images/groupIcon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/UI/Images/userIcon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/UI/UserObjectWithIcon.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Admin/Admin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Admin/Admin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UI/AdminUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/AdminUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UI/Listeners/AppTreeModelListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/Listeners/AppTreeModelListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/User/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/User/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/User/UserGroup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/User/UserGroup.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,9 +46,19 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true"
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "last_opened_file_path": "C:/Users/nathan/AppData/Local/JetBrains/IdeaIC2022.3/projects/Project2_3560/src/UI/Images"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\nathan\AppData\Local\JetBrains\IdeaIC2022.3\projects\Project2_3560\src\UI\Images" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\nathan\AppData\Local\JetBrains\IdeaIC2022.3\projects\Project2_3560\src\UI\Images" />
+      <recent name="C:\Users\nathan\AppData\Local\JetBrains\IdeaIC2022.3\projects\Project2_3560\src\UI" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="Driver" />
@@ -74,24 +77,40 @@
       <option name="presentableId" value="Default" />
       <updated>1699400918340</updated>
     </task>
+    <task id="LOCAL-00001" summary="Update">
+      <created>1699819779401</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1699819779401</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Update" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Driver.java</url>
-          <line>5</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/UI/AdminUI.java</url>
-          <line>32</line>
-          <properties method="buttonActionPerformed">
+          <url>file://$PROJECT_DIR$/src/UI/Listeners/AppTreeModelListener.java</url>
+          <line>13</line>
+          <properties class="UI.Listeners.AppTreeModelListener" method="treeNodesChanged">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
-          <option name="timeStamp" value="6" />
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/UI/CustomTreeCellRenderer.java</url>
+          <line>22</line>
+          <properties class="UI.CustomTreeCellRenderer" method="getTreeCellRendererComponent">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

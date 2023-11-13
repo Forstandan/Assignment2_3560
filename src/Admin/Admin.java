@@ -4,24 +4,26 @@ import UI.AdminUI;
 import User.UserGroup;
 import User.User;
 import Visitor.Visitor;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+
+import java.util.*;
 
 public class Admin implements Visitor {
     private UserGroup root;
     private static Admin instance;
     // name, ID
-    Map<String, User> userMap;
-    Map<String, UserGroup> groupMap;
+    private Set<User> userSet;
+    private Set<UserGroup> groupSet;
     int totalTweets;
 
     private Admin() {
-        userMap = new HashMap<>();
-        groupMap = new HashMap<>();
+        userSet = new HashSet<>();
+        groupSet = new HashSet<>();
         totalTweets = 0;
         root = new UserGroup("root", null);
-        AdminUI instance = AdminUI.getInstance(root);
+        groupSet.add(root);
+        AdminUI instance = AdminUI.getInstance();
+        instance.setRoot(root);
+        instance.createAdminView();
     }
 
     public static Admin getInstance() {
@@ -36,50 +38,30 @@ public class Admin implements Visitor {
         return instance;
     }
 
-    public void createUser() {
-        Scanner scanner = new Scanner(System.in);
-        boolean containsKey;
-        String username;
-        User newUser;
+    public User createUser(UserGroup parentGroup) {
+        User newUser = new User("username", root);
+        userSet.add(newUser);
 
-        do {
-            System.out.println("Please enter a new username");
-            username = scanner.nextLine();
+        parentGroup.addMember(newUser);
 
-            containsKey = userMap.containsKey(username);
-            if (containsKey) {
-                System.out.println("Username already taken");
-            }
-        }
-        while (containsKey);
-
-        newUser = new User(username, root);
-        userMap.put(username, newUser);
-
-        root.addMember(newUser);
+        return newUser;
     }
 
-    public void createGroup(UserGroup parentGroup) {
-        Scanner scanner = new Scanner(System.in);
-        boolean containsKey;
-        String groupName;
-        UserGroup newGroup;
+    public void setUsername(User user, String username) {
+        user.setUsername(username);
+    }
 
-        do {
-            System.out.println("Please enter a new username");
-            groupName = scanner.nextLine();
-
-            containsKey = groupMap.containsKey(groupName);
-            if (containsKey) {
-                System.out.println("Username already taken");
-            }
-        }
-        while (containsKey);
-
-        newGroup = new UserGroup(groupName, parentGroup);
-        groupMap.put(groupName, newGroup);
+    public UserGroup createGroup(UserGroup parentGroup) {
+        UserGroup newGroup = new UserGroup("groupName", parentGroup);
+        groupSet.add(newGroup);
 
         parentGroup.addMember(newGroup);
+
+        return newGroup;
+    }
+
+    public void setGroupName(UserGroup group, String groupName) {
+        group.setGroupName(groupName);
     }
 
     // visitor pattern

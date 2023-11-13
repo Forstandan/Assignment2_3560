@@ -17,6 +17,14 @@ public class UserGroup implements UserComponent{
         this.parentGroup = parentGroup;
     }
 
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
+
     // composite pattern
     public String getID() {
         return ID;
