@@ -2,26 +2,29 @@ package User;
 
 import Follow.Observer;
 import Follow.Subject;
+import UI.UserUI;
 import Visitor.Visitor;
 import Visitor.Element;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.util.UUID;
-
 public class User implements UserComponent, Subject, Observer, Element {
+    private UserUI UIInstance;
+    private boolean isOpen;
     private UserGroup group;
-    private final String ID;
-    private String username;
+    private String ID;
     private List<Observer> followers;
+    private List<User> following;
     private List<String> tweets;
     private List<String> feed;
 
     public User(String username, UserGroup parentGroup) {
-        ID = UUID.randomUUID().toString();
+        isOpen = false;
+        feed = new ArrayList<>();
+        ID = username;
         this.followers = new ArrayList<>();
+        this.following = new ArrayList<>();
         this.tweets = new ArrayList<>();
-        this.username = username;
         follow(this);
         group = parentGroup;
     }
@@ -31,29 +34,46 @@ public class User implements UserComponent, Subject, Observer, Element {
         return tweets;
     }
 
+    public void setTweets(List<String> tweets) { this.tweets = tweets; }
+
     public UserGroup getParentGroup() {
         return group;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public List<String> getFeed() {
+        return feed;
     }
 
-    public void getFeed() {
-        for (int i = feed.size() - 1; i >= 0; i--) {
-            System.out.println(feed.get(i));
-        }
+    public List<User> getFollowing() {
+        return following;
     }
 
     public void tweet(String string) {
         tweets.add(string);
         notifyObservers();
     }
+
+    public void setIsOpen(boolean isOpen, UserUI UIInstance) {
+        this.isOpen = isOpen;
+        this.UIInstance = UIInstance;
+    }
+
+    public UserUI getUIInstance() {
+        return UIInstance;
+    }
+
+    public boolean isOpen() {
+        return isOpen;
+    }
     // general methods end
 
     // composite pattern
     public String getID() {
         return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
     }
     // composite pattern end
 
@@ -69,6 +89,10 @@ public class User implements UserComponent, Subject, Observer, Element {
     public void notifyObservers() {
         for (Observer observer : followers) {
             observer.update(this);
+
+            if (observer instanceof User && ((User) observer).isOpen()) {
+                ((User) observer).getUIInstance().update((User) observer);
+            }
         }
     }
 
@@ -83,10 +107,7 @@ public class User implements UserComponent, Subject, Observer, Element {
 
     public void follow(User user) {
         user.attachObserver(this);
-    }
-
-    public void unfollow(User user) {
-        user.detachObserver(this);
+        following.add(user);
     }
     // observer pattern end
 

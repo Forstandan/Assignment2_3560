@@ -1,5 +1,7 @@
 package Admin;
 
+import Follow.Observer;
+import Follow.Subject;
 import UI.AdminUI;
 import User.UserGroup;
 import User.User;
@@ -7,18 +9,20 @@ import Visitor.Visitor;
 
 import java.util.*;
 
-public class Admin implements Visitor {
+public class Admin implements Visitor, Observer {
     private UserGroup root;
     private static Admin instance;
     // name, ID
     private Set<User> userSet;
     private Set<UserGroup> groupSet;
-    int totalTweets;
+    private int totalTweets;
+    private int positiveTweetTotal;
 
     private Admin() {
         userSet = new HashSet<>();
         groupSet = new HashSet<>();
         totalTweets = 0;
+        positiveTweetTotal = 0;
         root = new UserGroup("root", null);
         groupSet.add(root);
         AdminUI instance = AdminUI.getInstance();
@@ -38,21 +42,40 @@ public class Admin implements Visitor {
         return instance;
     }
 
-    public User createUser(UserGroup parentGroup) {
-        User newUser = new User("username", root);
+    public int getTotalTweets() {
+        return totalTweets;
+    }
+
+    public int getPositiveTweetTotal() {
+        return positiveTweetTotal;
+    }
+    public int getNumOfUsers() {
+        return userSet.size();
+    }
+
+    public int getNumOfGroups() {
+        return groupSet.size();
+    }
+
+    public Set<User> getUserSet() { return userSet; }
+
+    public User createUser(UserGroup parentGroup, String username) {
+        User newUser = new User(username, parentGroup);
         userSet.add(newUser);
 
         parentGroup.addMember(newUser);
+
+        newUser.attachObserver(this);
 
         return newUser;
     }
 
     public void setUsername(User user, String username) {
-        user.setUsername(username);
+        user.setID(username);
     }
 
-    public UserGroup createGroup(UserGroup parentGroup) {
-        UserGroup newGroup = new UserGroup("groupName", parentGroup);
+    public UserGroup createGroup(UserGroup parentGroup, String groupname) {
+        UserGroup newGroup = new UserGroup(groupname, parentGroup);
         groupSet.add(newGroup);
 
         parentGroup.addMember(newGroup);
@@ -66,7 +89,28 @@ public class Admin implements Visitor {
 
     // visitor pattern
     public void visitUser(User user) {
-        totalTweets += user.getTweets().size();
+        List<String> tweets = user.getTweets();
+        for (String tweet : tweets) {
+            if (isPositiveMessage(tweet)) {
+                positiveTweetTotal++;
+            }
+        }
     }
     // visitor pattern end
+
+    // Observer pattern
+    public void update(Subject subject) {
+        if (subject instanceof User) {
+            List<String> tweets = ((User) subject).getTweets();
+            String latestTweet = tweets.get(tweets.size()-1);
+            isPositiveMessage(latestTweet);
+
+            totalTweets++;
+        }
+    }
+    // Observer pattern end
+
+    private boolean isPositiveMessage(String tweet) {
+        return tweet.contains("good") || tweet.contains("happy") || tweet.contains("great");
+    }
 }

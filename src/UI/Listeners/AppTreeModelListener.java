@@ -13,15 +13,17 @@ public class AppTreeModelListener implements javax.swing.event.TreeModelListener
     @Override
     public void treeNodesChanged(TreeModelEvent e) {
         DefaultMutableTreeNode node;
-        node = (DefaultMutableTreeNode)(AdminUI.getInstance().getTree().getLastSelectedPathComponent());
+        AdminUI AdminUIInstance = AdminUI.getInstance();
+        Admin AdminInstance = Admin.getInstance();
+        node = (DefaultMutableTreeNode)(AdminUIInstance.getTree().getLastSelectedPathComponent());
 
-        UserComponent userComponent = AdminUI.getInstance().getNodeMap().get(node);
+        UserComponent userComponent = AdminUIInstance.getNodeMap().get(node);
         String userComponentName = node.getUserObject().toString();
         if (!userComponentName.equals("groupName") && userComponent instanceof UserGroup) {
-            Admin.getInstance().setGroupName((UserGroup) AdminUI.getInstance().getCurrentComponent(), userComponentName);
+            AdminInstance.setGroupName((UserGroup) AdminUI.getInstance().getCurrentComponent(), userComponentName);
         }
         else if (!userComponentName.equals("username") && userComponent instanceof User) {
-            Admin.getInstance().setUsername((User) AdminUI.getInstance().getCurrentComponent(), userComponentName);
+            AdminInstance.setUsername((User) AdminUI.getInstance().getCurrentComponent(), userComponentName);
         }
     }
 

@@ -5,17 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="16c70c25-3cf7-41e3-af00-2021d826924d" name="Changes" comment="Update">
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/UI/CustomTreeCellRenderer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/UI/Images/groupIcon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/UI/Images/userIcon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/UI/UserObjectWithIcon.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/UI/UserUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Admin/Admin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Admin/Admin.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/UI/AdminUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/AdminUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UI/CustomTreeCellRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/CustomTreeCellRenderer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/UI/Listeners/AppTreeModelListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/Listeners/AppTreeModelListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UI/UserObjectWithIcon.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/User/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/User/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/User/UserGroup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/User/UserGroup.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,6 +29,19 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="77d28c95-d00b-48be-b197-6adee97bfc14" />
+        <option name="url" value="https://github.com/Forstandan/Assignment2_3560.git" />
+      </UrlAndAccount>
+    </option>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -84,7 +94,14 @@
       <option name="project" value="LOCAL" />
       <updated>1699819779401</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Update">
+      <created>1699853890647</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1699853890647</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -95,23 +112,36 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/UI/Listeners/AppTreeModelListener.java</url>
-          <line>13</line>
-          <properties class="UI.Listeners.AppTreeModelListener" method="treeNodesChanged">
+          <url>file://$PROJECT_DIR$/src/UI/AdminUI.java</url>
+          <line>68</line>
+          <properties method="buttonActionPerformed">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
-          <option name="timeStamp" value="8" />
+          <option name="timeStamp" value="30" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/UI/CustomTreeCellRenderer.java</url>
-          <line>22</line>
-          <properties class="UI.CustomTreeCellRenderer" method="getTreeCellRendererComponent">
+          <url>file://$PROJECT_DIR$/src/UI/UserUI.java</url>
+          <line>84</line>
+          <properties>
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
-          <option name="timeStamp" value="12" />
+          <option name="timeStamp" value="33" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/UI/UserUI.java</url>
+          <line>48</line>
+          <properties method="actionPerformed">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="34" />
+        </line-breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.IllegalArgumentException" package="java.lang" />
+          <option name="timeStamp" value="26" />
+        </breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

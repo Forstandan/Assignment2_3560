@@ -1,24 +1,10 @@
 package UI;
 
-import User.*;
-import sun.swing.DefaultLookup;
-
 import javax.swing.*;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import java.awt.*;
 
-import static UI.AdminUI.createImageIcon;
-
 public class CustomTreeCellRenderer extends DefaultTreeCellRenderer {
-    boolean isUser;
-
-    CustomTreeCellRenderer(boolean isUser) {
-        this.isUser = isUser;
-    }
-
-    public void setIsUser(boolean isUser) {
-        this.isUser = isUser;
-    }
 
     public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel,
                                                   boolean expanded, boolean leaf, int row,
@@ -26,7 +12,7 @@ public class CustomTreeCellRenderer extends DefaultTreeCellRenderer {
     {
         super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
 
-        if (isUser) {
+        if (leaf) {
             setIcon(createImageIcon("Images/userIcon.png"));
         }
         else {
@@ -34,5 +20,15 @@ public class CustomTreeCellRenderer extends DefaultTreeCellRenderer {
         }
 
         return this;
+    }
+
+    static ImageIcon createImageIcon(String path) {
+        java.net.URL imgURL = AdminUI.class.getResource(path);
+        if (imgURL != null) {
+            return new ImageIcon(imgURL);
+        } else {
+            System.err.println("Couldn't find file: " + path);
+            return null;
+        }
     }
 }
