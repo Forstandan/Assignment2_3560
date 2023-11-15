@@ -20,11 +20,11 @@ public class User implements UserComponent, Subject, Observer, Element {
 
     public User(String username, UserGroup parentGroup) {
         isOpen = false;
-        feed = new ArrayList<>();
         ID = username;
         this.followers = new ArrayList<>();
         this.following = new ArrayList<>();
         this.tweets = new ArrayList<>();
+        this.feed = new ArrayList<>();
         follow(this);
         group = parentGroup;
     }
@@ -46,11 +46,6 @@ public class User implements UserComponent, Subject, Observer, Element {
 
     public List<User> getFollowing() {
         return following;
-    }
-
-    public void tweet(String string) {
-        tweets.add(string);
-        notifyObservers();
     }
 
     public void setIsOpen(boolean isOpen, UserUI UIInstance) {

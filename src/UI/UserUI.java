@@ -51,7 +51,6 @@ public class UserUI implements Observer {
         }
 
         private void buttonActionPerformed(ActionEvent e) {
-            String currentText = userID.getText();
 
             if (userID.getText().equals("")) {
                 UserComponent currentComponent = AdminUI.getInstance().getCurrentComponent();
@@ -83,8 +82,6 @@ public class UserUI implements Observer {
         }
 
         private void buttonActionPerformed(ActionEvent e) {
-            String currentText = tweet.getText();
-
             if (!tweet.getText().equals("")) {
                 List<String> tweets = currentUser.getTweets();
                 tweets.add(tweet.getText());

@@ -120,6 +120,10 @@ public class AdminUI {
                 username = userID.getText();
             }
 
+            if (Admin.getInstance().nameIsTaken(username)) {
+                return;
+            }
+
             if (currentComponent == null) {
                 newUser = Admin.getInstance().createUser(root, username);
                 parent = treeRoot;
@@ -230,12 +234,8 @@ public class AdminUI {
             JLabel label;
 
             if (totalMessages != 0) {
-                for (User user : admin.getUserSet()) {
-                    user.accept(admin);
-                }
-
                 label = new JLabel("Percentage of Positive Messages: " +
-                        admin.getPositiveTweetTotal()/admin.getTotalTweets() * 100 + "%");
+                        ((double) admin.getPositiveTweetTotal()/(double) admin.getTotalTweets()) * 100 + "%");
             }
             else {
                 label = new JLabel("Percentage of Positive Messages: 0%");

@@ -20,10 +20,10 @@ public class AppTreeModelListener implements javax.swing.event.TreeModelListener
         UserComponent userComponent = AdminUIInstance.getNodeMap().get(node);
         String userComponentName = node.getUserObject().toString();
         if (!userComponentName.equals("groupName") && userComponent instanceof UserGroup) {
-            AdminInstance.setGroupName((UserGroup) AdminUI.getInstance().getCurrentComponent(), userComponentName);
+            AdminInstance.setGroupName((UserGroup) AdminUIInstance.getCurrentComponent(), userComponentName);
         }
         else if (!userComponentName.equals("username") && userComponent instanceof User) {
-            AdminInstance.setUsername((User) AdminUI.getInstance().getCurrentComponent(), userComponentName);
+            AdminInstance.setUsername((User) AdminUIInstance.getCurrentComponent(), userComponentName);
         }
     }
 

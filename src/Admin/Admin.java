@@ -60,18 +60,33 @@ public class Admin implements Visitor, Observer {
     public Set<User> getUserSet() { return userSet; }
 
     public User createUser(UserGroup parentGroup, String username) {
-        User newUser = new User(username, parentGroup);
-        userSet.add(newUser);
+        if (!nameIsTaken(username)) {
+            User newUser = new User(username, parentGroup);
+            userSet.add(newUser);
 
-        parentGroup.addMember(newUser);
+            parentGroup.addMember(newUser);
 
-        newUser.attachObserver(this);
+            newUser.attachObserver(this);
 
-        return newUser;
+            return newUser;
+        }
+
+        return null;
     }
 
     public void setUsername(User user, String username) {
-        user.setID(username);
+        if (!nameIsTaken(username)) {
+            user.setID(username);
+        }
+    }
+
+    public boolean nameIsTaken(String username) {
+        for (User user: userSet) {
+            if (user.getID().equals(username)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public UserGroup createGroup(UserGroup parentGroup, String groupname) {
@@ -90,10 +105,9 @@ public class Admin implements Visitor, Observer {
     // visitor pattern
     public void visitUser(User user) {
         List<String> tweets = user.getTweets();
-        for (String tweet : tweets) {
-            if (isPositiveMessage(tweet)) {
-                positiveTweetTotal++;
-            }
+        String latestTweet = tweets.get(tweets.size() - 1);
+        if (isPositiveMessage(latestTweet)) {
+            positiveTweetTotal++;
         }
     }
     // visitor pattern end
@@ -101,16 +115,13 @@ public class Admin implements Visitor, Observer {
     // Observer pattern
     public void update(Subject subject) {
         if (subject instanceof User) {
-            List<String> tweets = ((User) subject).getTweets();
-            String latestTweet = tweets.get(tweets.size()-1);
-            isPositiveMessage(latestTweet);
-
             totalTweets++;
+            ((User) subject).accept(this);
         }
     }
     // Observer pattern end
 
     private boolean isPositiveMessage(String tweet) {
-        return tweet.contains("good") || tweet.contains("happy") || tweet.contains("great");
+        return tweet.contains("good") || tweet.contains("happy") || tweet.contains("great") || tweet.contains("positive");
     }
 }
