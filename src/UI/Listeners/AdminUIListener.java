@@ -1,6 +1,9 @@
-package UI;
+package UI.Listeners;
 
 import Admin.Admin;
+import UI.AdminUI;
+import UI.AdminUIFields;
+import UI.UserUI;
 import User.User;
 import User.UserGroup;
 import javax.swing.*;
@@ -10,7 +13,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class AdminUIListener extends AdminUIFields{
+public class AdminUIListener extends AdminUIFields {
     public final ActionListener actAddGroup = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -30,17 +33,17 @@ public class AdminUIListener extends AdminUIFields{
                 groupname = AdminUI.getInstance().getGroupID().getText();
             }
 
-            if (AdminUI.currentComponent == null) {
+            if (AdminUI.getCurrentComponent() == null) {
                 newGroup = Admin.getInstance().createGroup(AdminUI.getInstance().getRoot(), groupname);
                 parent = AdminUI.getInstance().getTreeRoot();
             }
-            else if (AdminUI.currentComponent instanceof UserGroup) {
-                newGroup = Admin.getInstance().createGroup(((UserGroup)AdminUI.currentComponent), groupname);
-                parent = AdminUI.currentNode;
+            else if (AdminUI.getCurrentComponent() instanceof UserGroup) {
+                newGroup = Admin.getInstance().createGroup(((UserGroup) AdminUI.getCurrentComponent()), groupname);
+                parent = AdminUI.getCurrentNode();
             }
             else {
-                newGroup = Admin.getInstance().createGroup(((User)AdminUI.currentComponent).getParentGroup(), groupname);
-                parent = (DefaultMutableTreeNode)AdminUI.currentNode.getParent();
+                newGroup = Admin.getInstance().createGroup(((User) AdminUI.getCurrentComponent()).getParentGroup(), groupname);
+                parent = (DefaultMutableTreeNode) AdminUI.getCurrentNode().getParent();
             }
 
             DefaultMutableTreeNode newNode = new DefaultMutableTreeNode(groupname);
@@ -75,17 +78,17 @@ public class AdminUIListener extends AdminUIFields{
                 return;
             }
 
-            if (AdminUI.currentComponent == null) {
+            if (AdminUI.getCurrentComponent() == null) {
                 newUser = Admin.getInstance().createUser(AdminUI.getInstance().getRoot(), username);
                 parent = AdminUI.getInstance().getTreeRoot();
             }
-            else if (AdminUI.currentComponent instanceof UserGroup) {
-                newUser = Admin.getInstance().createUser((UserGroup) AdminUI.currentComponent, username);
-                parent = AdminUI.currentNode;
+            else if (AdminUI.getCurrentComponent() instanceof UserGroup) {
+                newUser = Admin.getInstance().createUser((UserGroup) AdminUI.getCurrentComponent(), username);
+                parent = AdminUI.getCurrentNode();
             }
             else {
-                newUser = Admin.getInstance().createUser(((User) AdminUI.currentComponent).getParentGroup(), username);
-                parent = (DefaultMutableTreeNode)AdminUI.currentNode.getParent();
+                newUser = Admin.getInstance().createUser(((User) AdminUI.getCurrentComponent()).getParentGroup(), username);
+                parent = (DefaultMutableTreeNode) AdminUI.getCurrentNode().getParent();
             }
 
             DefaultMutableTreeNode newNode = new DefaultMutableTreeNode(username);
@@ -214,7 +217,7 @@ public class AdminUIListener extends AdminUIFields{
         }
 
         public void buttonActionPerformed(ActionEvent e) {
-            if (AdminUI.currentComponent instanceof User) {
+            if (AdminUI.getCurrentComponent() instanceof User) {
                 UserUI instance = new UserUI();
                 instance.createUserUI();
             }

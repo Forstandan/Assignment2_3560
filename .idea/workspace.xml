@@ -4,15 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="16c70c25-3cf7-41e3-af00-2021d826924d" name="Changes" comment="Update">
-      <change afterPath="$PROJECT_DIR$/src/UI/AdminUIFields.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/UI/AdminUIListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/UI/UserUIFields.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/UI/UserUIListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="16c70c25-3cf7-41e3-af00-2021d826924d" name="Changes" comment="Refactor">
       <change beforePath="$PROJECT_DIR$/src/UI/AdminUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/AdminUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UI/Listeners/AppTreeModelListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/AppTreeModelListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UI/AdminUIListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/AdminUIListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UI/AppTreeModelListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/AppTreeModelListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/UI/UserUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/UserUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UI/UserUIListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/UserUIListener.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,7 +115,14 @@
       <option name="project" value="LOCAL" />
       <updated>1700019988975</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Refactor">
+      <created>1700443694603</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1700443694603</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -134,7 +138,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Update" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update" />
+    <MESSAGE value="Refactor" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -168,12 +173,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/UI/AdminUI.java</url>
-          <line>164</line>
+          <line>181</line>
           <option name="timeStamp" value="43" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/UI/AdminUI.java</url>
-          <line>165</line>
+          <line>182</line>
           <option name="timeStamp" value="44" />
         </line-breakpoint>
       </breakpoints>

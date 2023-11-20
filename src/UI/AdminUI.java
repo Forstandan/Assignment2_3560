@@ -1,5 +1,6 @@
 package UI;
 
+import UI.Listeners.AdminUIListener;
 import User.UserComponent;
 
 import javax.swing.*;
@@ -8,9 +9,9 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AdminUI extends AdminUIListener{
-    static UserComponent currentComponent;
-    static DefaultMutableTreeNode currentNode;
+public class AdminUI extends AdminUIListener {
+    private static UserComponent currentComponent;
+    private static DefaultMutableTreeNode currentNode;
     private static AdminUI instance;
 
     private AdminUI() {
@@ -28,6 +29,23 @@ public class AdminUI extends AdminUIListener{
 
         return instance;
     }
+
+    public static UserComponent getCurrentComponent() {
+        return currentComponent;
+    }
+
+    public static void setCurrentComponent(UserComponent currentComponent) {
+        AdminUI.currentComponent = currentComponent;
+    }
+
+    public static DefaultMutableTreeNode getCurrentNode() {
+        return currentNode;
+    }
+
+    public static void setCurrentNode(DefaultMutableTreeNode currentNode) {
+        AdminUI.currentNode = currentNode;
+    }
+
 
     public void createAdminView() {
         /* creating panels */
@@ -147,7 +165,7 @@ public class AdminUI extends AdminUIListener{
         DefaultMutableTreeNode treeRoot = new DefaultMutableTreeNode("Root");
         setTreeRoot(treeRoot);
 
-        currentNode = treeRoot;
+        setCurrentNode(treeRoot);
         DefaultTreeModel treeModel = new DefaultTreeModel(treeRoot);
         treeModel.addTreeModelListener(new AppTreeModelListener());
         setTreeModel(treeModel);
@@ -164,12 +182,12 @@ public class AdminUI extends AdminUIListener{
         tree.setEditable(true);
         tree.addTreeSelectionListener(e -> {
             DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
-             currentNode = node;
+             setCurrentNode(node);
 
             if (node == null) {
                 return;
             }
-            currentComponent = AdminUI.getNodeMap().get(node);
+            setCurrentComponent(AdminUI.getNodeMap().get(node));
         });
 
         tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);

@@ -20,7 +20,7 @@ public class UserUIListener extends UserUIFields {
         private void buttonActionPerformed(ActionEvent e) {
 
             if (getUserID().getText().equals("")) {
-                UserComponent currentComponent = AdminUI.currentComponent;
+                UserComponent currentComponent = AdminUI.getCurrentComponent();
                 if (currentComponent instanceof User && currentComponent != getCurrentUser()) {
                     getCurrentUser().follow((User) currentComponent);
                     getFollowerListModel().insertElementAt(currentComponent.getID(), getFollowerList().getSelectedIndex() + 1);

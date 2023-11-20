@@ -39,7 +39,7 @@ public class UserUI extends UserUIListener implements Observer {
     }
 
     public void createUserUI() {
-        User currentUser = (User) AdminUI.currentComponent;
+        User currentUser = (User) AdminUI.getCurrentComponent();
         currentUser.setIsOpen(true, this);
         setCurrentUser(currentUser);
 
