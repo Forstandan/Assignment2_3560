@@ -3,94 +3,12 @@ package UI;
 import Follow.Observer;
 import Follow.Subject;
 import User.*;
-import Admin.Admin;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.List;
-import java.util.Objects;
-import java.util.Set;
 
-public class UserUI implements Observer {
-    private JTextField userID;
-    private JTextField tweet;
-    private JList<String> followerList;
-    private DefaultListModel<String> followerListModel;
-    private JList<String> feedList;
-    private DefaultListModel<String> feedListModel;
-    private User currentUser;
-    private final static GridBagConstraints constraintsUserID = new GridBagConstraints(
-            0, 0, 100, 100, 1, 1,
-            GridBagConstraints.LINE_START, GridBagConstraints.HORIZONTAL,
-            new Insets(0, 10, 0, 130), 0, 0
-    );
-
-    private final static GridBagConstraints constraintsFollowUserButton = new GridBagConstraints(
-            0, 0, 1, 1,  1, 1,
-            GridBagConstraints.LINE_END, GridBagConstraints.NONE,
-            new Insets(15, 0, 15, 10), 0, 0
-    );
-
-    private final static GridBagConstraints constraintsTweetTextField = new GridBagConstraints(
-            0, 0, 1, 1, 1, 1,
-            GridBagConstraints.LINE_START, GridBagConstraints.HORIZONTAL,
-            new Insets(20, 10, 20, 130), 0, 0
-    );
-
-    private final static GridBagConstraints constraintsPostTweet = new GridBagConstraints(
-            0, 0, 1, 1,  1, 1,
-            GridBagConstraints.LINE_END, GridBagConstraints.NONE,
-            new Insets(15, 0, 15, 10), 0, 0
-    );
-
-    private final ActionListener actFollowUser = new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            buttonActionPerformed(e);
-        }
-
-        private void buttonActionPerformed(ActionEvent e) {
-
-            if (userID.getText().equals("")) {
-                UserComponent currentComponent = AdminUI.getInstance().getCurrentComponent();
-                if (currentComponent instanceof User && currentComponent != currentUser) {
-                    currentUser.follow((User) currentComponent);
-                    followerListModel.insertElementAt(currentComponent.getID(), followerList.getSelectedIndex() + 1);
-                    userID.setText("");
-                }
-            }
-            else {
-                Set<User> userSet = Admin.getInstance().getUserSet();
-
-                for (User user : userSet) {
-                    if (Objects.equals(user.getID(), userID.getText()) && !currentUser.getFollowing().contains(user)) {
-                        currentUser.follow(user);
-                        followerListModel.insertElementAt(user.getID(), followerList.getSelectedIndex() + 1);
-                        userID.setText("");
-                        break;
-                    }
-                }
-            }
-        }
-    };
-
-    private final ActionListener actTweet = new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            buttonActionPerformed(e);
-        }
-
-        private void buttonActionPerformed(ActionEvent e) {
-            if (!tweet.getText().equals("")) {
-                List<String> tweets = currentUser.getTweets();
-                tweets.add(tweet.getText());
-                currentUser.setTweets(tweets);
-                currentUser.notifyObservers();
-                tweet.setText("");
-            }
-        }
-    };
+public class UserUI extends UserUIListener implements Observer {
 
     private static DefaultListModel<String> updateFollowerList(User user, DefaultListModel<String> listModel) {
         listModel.clear();
@@ -117,12 +35,13 @@ public class UserUI implements Observer {
 
     public void update(Subject subject) {
         List<String> updatedFeed = ((User) subject).getFeed();
-        feedListModel.insertElementAt(updatedFeed.get(updatedFeed.size() - 1), feedList.getSelectedIndex() + 1);
+        getFeedListModel().insertElementAt(updatedFeed.get(updatedFeed.size() - 1), getFeedList().getSelectedIndex() + 1);
     }
 
     public void createUserUI() {
-        currentUser = (User) AdminUI.getInstance().getCurrentComponent();
+        User currentUser = (User) AdminUI.currentComponent;
         currentUser.setIsOpen(true, this);
+        setCurrentUser(currentUser);
 
         /* creating panels */
         GridBagLayout gridBagLayout = new GridBagLayout();
@@ -163,8 +82,9 @@ public class UserUI implements Observer {
         currentUserPanel.setBounds(0, 0, 200, 100);
 
         /* create components */
-        userID = new JTextField();
+        JTextField userID = new JTextField();
         userID.setEditable(true);
+        setUserID(userID);
 
         JLabel currentUserID = new JLabel();
         currentUserID.setText("@" + currentUser.getID());
@@ -183,17 +103,22 @@ public class UserUI implements Observer {
         postTweetButton.setBackground(Color.gray);
         postTweetButton.setForeground(Color.WHITE);
 
-        tweet = new JTextField();
+        JTextField tweet = new JTextField();
         tweet.setEditable(true);
+        setTweet(tweet);
 
-        followerListModel = updateFollowerList(currentUser, new DefaultListModel<>());
-        followerList = new JList<>(followerListModel);
+        DefaultListModel<String> followerListModel = updateFollowerList(currentUser, new DefaultListModel<>());
+        JList<String> followerList = new JList<>(followerListModel);
         followerList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         followerList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+        setFollowerList(followerList);
+        setFollowerListModel(followerListModel);
 
-        feedListModel = updateFeedList(currentUser, new DefaultListModel<>());
-        feedList = new JList<>(feedListModel);
+        DefaultListModel<String> feedListModel = updateFeedList(currentUser, new DefaultListModel<>());
+        JList<String> feedList = new JList<>(feedListModel);
         feedList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        setFeedList(feedList);
+        setFeedListModel(feedListModel);
 
         /* create frame and add components */
         JFrame frame = new JFrame("user view");

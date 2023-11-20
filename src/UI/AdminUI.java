@@ -1,274 +1,17 @@
 package UI;
 
-import Admin.Admin;
-import UI.Listeners.AppTreeModelListener;
-import User.*;
-import User.UserGroup;
+import User.UserComponent;
+
 import javax.swing.*;
 import javax.swing.tree.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AdminUI {
-    private JTextField userID;
-    private JTextField groupID;
-    private JTree tree;
-    private DefaultTreeModel treeModel;
-    private DefaultMutableTreeNode treeRoot;
-    private UserGroup root;
-    private static final Map<DefaultMutableTreeNode, UserComponent> nodeMap = new HashMap<>();
-    private UserComponent currentComponent;
-    private DefaultMutableTreeNode currentNode;
+public class AdminUI extends AdminUIListener{
+    static UserComponent currentComponent;
+    static DefaultMutableTreeNode currentNode;
     private static AdminUI instance;
-    // group button
-    private final GridBagConstraints constraintsGroupButton = new GridBagConstraints(100, 0, 200,
-            0, 1, 1, GridBagConstraints.PAGE_START, GridBagConstraints.NONE,
-            new Insets(60, 0, 0, 20), 0, 0);
-    // user button
-    private final GridBagConstraints constraintsUserButton = new GridBagConstraints(100, 200, 300,
-            400, 0.8, 1, GridBagConstraints.PAGE_START, GridBagConstraints.NONE,
-            new Insets(20, 0, 0, 20), 0, 0);
-    // user view button
-    private final GridBagConstraints constraintsUserViewButton = new GridBagConstraints(100, 100, 200,
-            0, 1, 1, GridBagConstraints.PAGE_START, GridBagConstraints.HORIZONTAL,
-            new Insets(10, 40, 10, 60), 0, 0);
-    // total users button
-    private final GridBagConstraints constraintsUserTotalButton = new GridBagConstraints(100, 200, 200,
-            100, 1, 1, GridBagConstraints.PAGE_START, GridBagConstraints.NONE,
-            new Insets(10, 0, 10, 10), 0, 0);
-    // total messages button
-    private final GridBagConstraints constraintsTotalMessagesButton = new GridBagConstraints(100, 200, 200,
-            400, 1, 1, GridBagConstraints.PAGE_END, GridBagConstraints.NONE,
-            new Insets(10, 0, 10, 10), 0, 0);
-    // user view button
-    private final GridBagConstraints constraintsGroupTotalButton = new GridBagConstraints(100, 200, 200,
-            400, 1, 1, GridBagConstraints.PAGE_START, GridBagConstraints.NONE,
-            new Insets(10, 0, 10, 20), 0, 0);
-    // total users button
-    private final GridBagConstraints constraintsPositiveMessagePercentButton = new GridBagConstraints(100, 200, 200,
-            400, 1, 1, GridBagConstraints.PAGE_END, GridBagConstraints.NONE,
-            new Insets(10, 0, 10, 20), 0, 0);
-    // user ID
-    private final GridBagConstraints constraintsUserID = new GridBagConstraints(100, 200, 300,
-            400, 1, 1, GridBagConstraints.LINE_START, GridBagConstraints.HORIZONTAL,
-            new Insets(10, 40, 45, 0), 0, 0);
-    // group ID
-    private final GridBagConstraints constraintsGroupID = new GridBagConstraints(100, 200, 200,
-            400, 1, 1, GridBagConstraints.LINE_START, GridBagConstraints.HORIZONTAL,
-            new Insets(45, 40, 0, 0), 0, 0);
-
-    private final ActionListener actAddGroup = new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            buttonActionPerformed(e);
-        }
-
-        private void buttonActionPerformed(ActionEvent e) {
-            UserGroup newGroup;
-            DefaultMutableTreeNode parent;
-
-            String groupname = "";
-
-            if (groupID.getText().equals("")) {
-                groupname = "groupname";
-            }
-            else {
-                groupname = groupID.getText();
-            }
-
-            if (currentComponent == null) {
-                newGroup = Admin.getInstance().createGroup(root, groupname);
-                parent = treeRoot;
-            }
-            else if (currentComponent instanceof UserGroup) {
-                newGroup = Admin.getInstance().createGroup(((UserGroup)currentComponent), groupname);
-                parent = currentNode;
-            }
-            else {
-                newGroup = Admin.getInstance().createGroup(((User)currentComponent).getParentGroup(), groupname);
-                parent = (DefaultMutableTreeNode)currentNode.getParent();
-            }
-
-            DefaultMutableTreeNode newNode = new DefaultMutableTreeNode(groupname);
-            nodeMap.put(newNode, newGroup);
-            treeModel.insertNodeInto(newNode, parent, parent.getChildCount());
-            tree.scrollPathToVisible(new TreePath(newNode.getPath()));
-
-            groupID.setText("");
-        }
-    };
-
-    private final ActionListener actAddUser = new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            buttonActionPerformed(e);
-        }
-
-        private void buttonActionPerformed(ActionEvent e) {
-            User newUser;
-            DefaultMutableTreeNode parent;
-
-            String username;
-
-            if (userID.getText().equals("")) {
-                username = "username";
-            }
-            else {
-                username = userID.getText();
-            }
-
-            if (Admin.getInstance().nameIsTaken(username)) {
-                return;
-            }
-
-            if (currentComponent == null) {
-                newUser = Admin.getInstance().createUser(root, username);
-                parent = treeRoot;
-            }
-            else if (currentComponent instanceof UserGroup) {
-                newUser = Admin.getInstance().createUser((UserGroup) currentComponent, username);
-                parent = currentNode;
-            }
-            else {
-                newUser = Admin.getInstance().createUser(((User) currentComponent).getParentGroup(), username);
-                parent = (DefaultMutableTreeNode)currentNode.getParent();
-            }
-
-            DefaultMutableTreeNode newNode = new DefaultMutableTreeNode(username);
-            nodeMap.put(newNode, newUser);
-            treeModel.insertNodeInto(newNode, parent, parent.getChildCount());
-            tree.scrollPathToVisible(new TreePath(newNode.getPath()));
-
-            userID.setText("");
-        }
-    };
-
-    private final ActionListener actShowUserTotal = new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            buttonActionPerformed(e);
-        }
-
-        private void buttonActionPerformed(ActionEvent e) {
-            JFrame frame = new JFrame("popup");
-            JLabel label = new JLabel("User Total: " + Admin.getInstance().getNumOfUsers());
-            GridBagConstraints constraints = new GridBagConstraints();
-
-            // set constraints
-            constraints.anchor = GridBagConstraints.CENTER;
-            GridBagLayout gridBagLayout = new GridBagLayout();
-            gridBagLayout.setConstraints(label, constraints);
-            frame.setLayout(gridBagLayout);
-
-            // add components
-            frame.add(label);
-            frame.setBounds(230, 130, 100, 100);
-            frame.setVisible(true);
-            frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        }
-    };
-
-    private final ActionListener actShowGroupTotal = new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            buttonActionPerformed(e);
-        }
-
-        private void buttonActionPerformed(ActionEvent e) {
-            JFrame frame = new JFrame("popup");
-            JLabel label = new JLabel("Group Total: " + Admin.getInstance().getNumOfGroups());
-            GridBagConstraints constraints = new GridBagConstraints();
-
-            // set constraints
-            constraints.anchor = GridBagConstraints.CENTER;
-            GridBagLayout gridBagLayout = new GridBagLayout();
-            gridBagLayout.setConstraints(label, constraints);
-            frame.setLayout(gridBagLayout);
-
-            // add components
-            frame.add(label);
-            frame.setBounds(430, 130, 100, 100);
-            frame.setVisible(true);
-            frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        }
-    };
-
-    private final ActionListener actShowTotalMessages = new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            buttonActionPerformed(e);
-        }
-
-        private void buttonActionPerformed(ActionEvent e) {
-            JFrame frame = new JFrame("popup");
-            JLabel label = new JLabel("Message Total: " + Admin.getInstance().getTotalTweets());
-            GridBagConstraints constraints = new GridBagConstraints();
-
-            // set constraints
-            constraints.anchor = GridBagConstraints.CENTER;
-            GridBagLayout gridBagLayout = new GridBagLayout();
-            gridBagLayout.setConstraints(label, constraints);
-            frame.setLayout(gridBagLayout);
-
-            // add components
-            frame.add(label);
-            frame.setBounds(230, 160, 100, 100);
-            frame.setVisible(true);
-            frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        }
-    };
-
-    private final ActionListener actShowPositiveMessagePercentage = new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            buttonActionPerformed(e);
-        }
-
-        private void buttonActionPerformed(ActionEvent e) {
-            JFrame frame = new JFrame("popup");
-            Admin admin = Admin.getInstance();
-            int totalMessages = admin.getTotalTweets();
-            JLabel label;
-
-            if (totalMessages != 0) {
-                label = new JLabel("Percentage of Positive Messages: " +
-                        ((double) admin.getPositiveTweetTotal()/(double) admin.getTotalTweets()) * 100 + "%");
-            }
-            else {
-                label = new JLabel("Percentage of Positive Messages: 0%");
-            }
-            GridBagConstraints constraints = new GridBagConstraints();
-
-            // set constraints
-            constraints.anchor = GridBagConstraints.CENTER;
-            GridBagLayout gridBagLayout = new GridBagLayout();
-            gridBagLayout.setConstraints(label, constraints);
-            frame.setLayout(gridBagLayout);
-
-            // add components
-            frame.add(label);
-            frame.setBounds(430, 160, 400, 100);
-            frame.setVisible(true);
-            frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        }
-    };
-
-    private final ActionListener actOpenUserView = new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            buttonActionPerformed(e);
-        }
-
-        private void buttonActionPerformed(ActionEvent e) {
-            if (currentComponent instanceof User) {
-                UserUI instance = new UserUI();
-                instance.createUserUI();
-            }
-        }
-    };
 
     private AdminUI() {
 
@@ -284,22 +27,6 @@ public class AdminUI {
         }
 
         return instance;
-    }
-
-    public JTree getTree() {
-        return tree;
-    }
-
-    public Map<DefaultMutableTreeNode, UserComponent> getNodeMap() {
-        return nodeMap;
-    }
-
-    public void setRoot(UserGroup root) {
-        this.root = root;
-    }
-
-    public UserComponent getCurrentComponent() {
-        return currentComponent;
     }
 
     public void createAdminView() {
@@ -344,26 +71,26 @@ public class AdminUI {
         JPanel userIDTextPanel = new JPanel();
         userIDTextPanel.setBackground(Color.lightGray);
         userIDTextPanel.setLayout(gridBagLayout);
-//        userIDTextPanel.setPreferredSize(new Dimension(300, 30));
 
         JPanel groupIDTextPanel = new JPanel();
         groupIDTextPanel.setBackground(Color.lightGray);
         groupIDTextPanel.setLayout(gridBagLayout);
-//        groupIDTextPanel.setPreferredSize(new Dimension(300, 30));
 
         /* add components to the panels */
         // upperPanel labels
-        userID = new JTextField();
+        JTextField userID = new JTextField();
         userID.setBackground(Color.WHITE);
         userID.setForeground(Color.BLACK);
-//        userID.setSize(new Dimension(300, 30));
         userID.setEditable(true);
+        setUserID(userID);
 
-        groupID = new JTextField();
+        JTextField groupID = new JTextField();
         groupID.setBackground(Color.WHITE);
         groupID.setForeground(Color.BLACK);
-//        groupID.setSize(new Dimension(300, 30));
         groupID.setEditable(true);
+        setGroupID(groupID);
+
+        AdminUIListener adminUIListenerInstance = new AdminUIListener();
 
         // upperPanel buttons
         JButton addUserButton = new JButton("Add User");
@@ -374,7 +101,7 @@ public class AdminUI {
         addUserButton.setPreferredSize(new Dimension(100, 24));
 
         JButton addGroupButton = new JButton("Add Group");
-        addGroupButton.addActionListener(actAddGroup);
+        addGroupButton.addActionListener(adminUIListenerInstance.actAddGroup);
         addGroupButton.setBorderPainted(false);
         addGroupButton.setBackground(Color.gray);
         addGroupButton.setForeground(Color.WHITE);
@@ -382,58 +109,67 @@ public class AdminUI {
 
         // mid panel buttons
         JButton userViewButton = new JButton("Open User View");
-        userViewButton.addActionListener(actOpenUserView);
+        userViewButton.addActionListener(adminUIListenerInstance.actOpenUserView);
         userViewButton.setBorderPainted(false);
         userViewButton.setBackground(Color.gray);
         userViewButton.setForeground(Color.WHITE);
 
         // lower panel buttons
         JButton userTotalButton = new JButton("Show User Total");
-        userTotalButton.addActionListener(actShowUserTotal);
+        userTotalButton.addActionListener(adminUIListenerInstance.actShowUserTotal);
         userTotalButton.setBorderPainted(false);
         userTotalButton.setBackground(Color.gray);
         userTotalButton.setForeground(Color.WHITE);
         userTotalButton.setPreferredSize(new Dimension(400, 30));
 
         JButton totalMessagesButton = new JButton("Show Message Total");
-        totalMessagesButton.addActionListener(actShowTotalMessages);
+        totalMessagesButton.addActionListener(adminUIListenerInstance.actShowTotalMessages);
         totalMessagesButton.setBorderPainted(false);
         totalMessagesButton.setBackground(Color.gray);
         totalMessagesButton.setForeground(Color.WHITE);
         totalMessagesButton.setPreferredSize(new Dimension(400, 30));
 
         JButton groupTotalButton = new JButton("Show Group Total");
-        groupTotalButton.addActionListener(actShowGroupTotal);
+        groupTotalButton.addActionListener(adminUIListenerInstance.actShowGroupTotal);
         groupTotalButton.setBorderPainted(false);
         groupTotalButton.setBackground(Color.gray);
         groupTotalButton.setForeground(Color.WHITE);
         groupTotalButton.setPreferredSize(new Dimension(400, 30));
 
         JButton positiveMessagePercentButton = new JButton("Positive Message Percentage");
-        positiveMessagePercentButton.addActionListener(actShowPositiveMessagePercentage);
+        positiveMessagePercentButton.addActionListener(adminUIListenerInstance.actShowPositiveMessagePercentage);
         positiveMessagePercentButton.setBorderPainted(false);
         positiveMessagePercentButton.setBackground(Color.gray);
         positiveMessagePercentButton.setForeground(Color.WHITE);
         positiveMessagePercentButton.setPreferredSize(new Dimension(400, 30));
 
         /* tree view */
-        treeRoot = new DefaultMutableTreeNode("Root");
+        DefaultMutableTreeNode treeRoot = new DefaultMutableTreeNode("Root");
+        setTreeRoot(treeRoot);
+
         currentNode = treeRoot;
-        treeModel = new DefaultTreeModel(treeRoot);
+        DefaultTreeModel treeModel = new DefaultTreeModel(treeRoot);
         treeModel.addTreeModelListener(new AppTreeModelListener());
-        tree = new JTree(treeModel);
+        setTreeModel(treeModel);
+
+        JTree tree = new JTree(treeModel);
         tree.setCellRenderer(new CustomTreeCellRenderer());
         tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-        nodeMap.put(treeRoot, this.root);
+        setTree(tree);
+
+        Map<DefaultMutableTreeNode, UserComponent> nodeMap = new HashMap<>();
+        nodeMap.put(treeRoot, getRoot());
+        setNodeMap(nodeMap);
+
         tree.setEditable(true);
         tree.addTreeSelectionListener(e -> {
             DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
-            currentNode = node;
+             currentNode = node;
 
             if (node == null) {
                 return;
             }
-            currentComponent = AdminUI.nodeMap.get(node);
+            currentComponent = AdminUI.getNodeMap().get(node);
         });
 
         tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);

@@ -5,13 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="16c70c25-3cf7-41e3-af00-2021d826924d" name="Changes" comment="Update">
+      <change afterPath="$PROJECT_DIR$/src/UI/AdminUIFields.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/UI/AdminUIListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/UI/UserUIFields.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/UI/UserUIListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Admin/Admin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Admin/Admin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Driver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Driver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/UI/AdminUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/AdminUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UI/Listeners/AppTreeModelListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/Listeners/AppTreeModelListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UI/Listeners/AppTreeModelListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/AppTreeModelListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/UI/UserUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/UserUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/User/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/User/User.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,11 +30,11 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;
   }
-}]]></component>
+}</component>
   <component name="GithubPullRequestsUISettings">
     <option name="selectedUrlAndAccountId">
       <UrlAndAccount>
@@ -51,14 +52,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "last_opened_file_path": "C:/Users/nathan/AppData/Local/JetBrains/IdeaIC2022.3/projects/Project2_3560/src/UI/Images"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/nathan/AppData/Local/JetBrains/IdeaIC2022.3/projects/Project2_3560/src/UI/Images&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\nathan\AppData\Local\JetBrains\IdeaIC2022.3\projects\Project2_3560\src\UI\Images" />
@@ -66,6 +67,9 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\nathan\AppData\Local\JetBrains\IdeaIC2022.3\projects\Project2_3560\src\UI\Images" />
       <recent name="C:\Users\nathan\AppData\Local\JetBrains\IdeaIC2022.3\projects\Project2_3560\src\UI" />
+    </key>
+    <key name="ExtractSuperBase.RECENT_KEYS">
+      <recent name="UI" />
     </key>
   </component>
   <component name="RunManager">
@@ -107,7 +111,14 @@
       <option name="project" value="LOCAL" />
       <updated>1700012053434</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Update">
+      <created>1700019988975</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1700019988975</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -129,33 +140,6 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/UI/AdminUI.java</url>
-          <line>68</line>
-          <properties method="buttonActionPerformed">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="30" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/UI/UserUI.java</url>
-          <line>83</line>
-          <properties method="buttonActionPerformed">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="33" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/UI/UserUI.java</url>
-          <line>48</line>
-          <properties method="actionPerformed">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="34" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/Admin/Admin.java</url>
           <line>105</line>
           <properties class="Admin.Admin" method="visitUser">
@@ -164,19 +148,34 @@
           </properties>
           <option name="timeStamp" value="35" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/UI/AdminUI.java</url>
-          <line>109</line>
-          <properties method="buttonActionPerformed">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="37" />
-        </line-breakpoint>
         <breakpoint enabled="true" type="java-exception">
           <properties class="java.lang.IllegalArgumentException" package="java.lang" />
           <option name="timeStamp" value="26" />
         </breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.StackOverflowError" package="java.lang" />
+          <option name="timeStamp" value="38" />
+        </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/UI/AdminUIListener.java</url>
+          <line>212</line>
+          <option name="timeStamp" value="39" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/UI/AdminUIListener.java</url>
+          <line>57</line>
+          <option name="timeStamp" value="40" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/UI/AdminUI.java</url>
+          <line>164</line>
+          <option name="timeStamp" value="43" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/UI/AdminUI.java</url>
+          <line>165</line>
+          <option name="timeStamp" value="44" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

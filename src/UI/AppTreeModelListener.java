@@ -1,4 +1,4 @@
-package UI.Listeners;
+package UI;
 
 import Admin.Admin;
 import UI.AdminUI;
@@ -17,13 +17,13 @@ public class AppTreeModelListener implements javax.swing.event.TreeModelListener
         Admin AdminInstance = Admin.getInstance();
         node = (DefaultMutableTreeNode)(AdminUIInstance.getTree().getLastSelectedPathComponent());
 
-        UserComponent userComponent = AdminUIInstance.getNodeMap().get(node);
+        UserComponent userComponent = AdminUIFields.getNodeMap().get(node);
         String userComponentName = node.getUserObject().toString();
         if (!userComponentName.equals("groupName") && userComponent instanceof UserGroup) {
-            AdminInstance.setGroupName((UserGroup) AdminUIInstance.getCurrentComponent(), userComponentName);
+            AdminInstance.setGroupName((UserGroup) AdminUI.currentComponent, userComponentName);
         }
         else if (!userComponentName.equals("username") && userComponent instanceof User) {
-            AdminInstance.setUsername((User) AdminUIInstance.getCurrentComponent(), userComponentName);
+            AdminInstance.setUsername((User) AdminUI.currentComponent, userComponentName);
         }
     }
 
