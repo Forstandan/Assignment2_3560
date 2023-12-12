@@ -1,4 +1,4 @@
-package UI.Listeners;
+package UI;
 
 import Admin.Admin;
 import UI.AdminUI;
@@ -14,6 +14,40 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class AdminUIListener extends AdminUIFields {
+    private void createPopup(String text, int width) {
+        GridBagLayout gridBagLayout = new GridBagLayout();
+        // create frame
+        JFrame frame = new JFrame("popup");
+        frame.setLayout(new BorderLayout());
+
+        JPanel panel = new JPanel();
+        panel.setBackground(Color.DARK_GRAY);
+
+        // create label
+        JLabel label = new JLabel(text);
+        label.setFont(new Font("Arial", Font.PLAIN, 8));
+        label.setForeground(Color.white);
+        GridBagConstraints constraints = new GridBagConstraints();
+
+        // set constraints
+        constraints.anchor = GridBagConstraints.CENTER;
+        gridBagLayout.setConstraints(label, constraints);
+
+        // add components
+        frame.add(panel, BorderLayout.CENTER);
+        panel.add(label);
+        frame.setBounds(480, 230, width, 60);
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+
+        Timer timer = new Timer(3000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+            }
+        });
+        timer.start();
+    }
     public final ActionListener actAddGroup = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -107,21 +141,7 @@ public class AdminUIListener extends AdminUIFields {
         }
 
         public void buttonActionPerformed(ActionEvent e) {
-            JFrame frame = new JFrame("popup");
-            JLabel label = new JLabel("User Total: " + Admin.getInstance().getNumOfUsers());
-            GridBagConstraints constraints = new GridBagConstraints();
-
-            // set constraints
-            constraints.anchor = GridBagConstraints.CENTER;
-            GridBagLayout gridBagLayout = new GridBagLayout();
-            gridBagLayout.setConstraints(label, constraints);
-            frame.setLayout(gridBagLayout);
-
-            // add components
-            frame.add(label);
-            frame.setBounds(230, 130, 100, 100);
-            frame.setVisible(true);
-            frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+            createPopup("User Total: " + Admin.getInstance().getNumOfUsers(), 100);
         }
     };
 
@@ -132,21 +152,7 @@ public class AdminUIListener extends AdminUIFields {
         }
 
         public void buttonActionPerformed(ActionEvent e) {
-            JFrame frame = new JFrame("popup");
-            JLabel label = new JLabel("Group Total: " + Admin.getInstance().getNumOfGroups());
-            GridBagConstraints constraints = new GridBagConstraints();
-
-            // set constraints
-            constraints.anchor = GridBagConstraints.CENTER;
-            GridBagLayout gridBagLayout = new GridBagLayout();
-            gridBagLayout.setConstraints(label, constraints);
-            frame.setLayout(gridBagLayout);
-
-            // add components
-            frame.add(label);
-            frame.setBounds(430, 130, 100, 100);
-            frame.setVisible(true);
-            frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+            createPopup("Group Total: " + Admin.getInstance().getNumOfGroups(), 100);
         }
     };
 
@@ -157,21 +163,7 @@ public class AdminUIListener extends AdminUIFields {
         }
 
         public void buttonActionPerformed(ActionEvent e) {
-            JFrame frame = new JFrame("popup");
-            JLabel label = new JLabel("Message Total: " + Admin.getInstance().getTotalTweets());
-            GridBagConstraints constraints = new GridBagConstraints();
-
-            // set constraints
-            constraints.anchor = GridBagConstraints.CENTER;
-            GridBagLayout gridBagLayout = new GridBagLayout();
-            gridBagLayout.setConstraints(label, constraints);
-            frame.setLayout(gridBagLayout);
-
-            // add components
-            frame.add(label);
-            frame.setBounds(230, 160, 100, 100);
-            frame.setVisible(true);
-            frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+            createPopup("Message Total: " + Admin.getInstance().getTotalTweets(), 100);
         }
     };
 
@@ -182,31 +174,16 @@ public class AdminUIListener extends AdminUIFields {
         }
 
         public void buttonActionPerformed(ActionEvent e) {
-            JFrame frame = new JFrame("popup");
             Admin admin = Admin.getInstance();
             int totalMessages = admin.getTotalTweets();
-            JLabel label;
 
             if (totalMessages != 0) {
-                label = new JLabel("Percentage of Positive Messages: " +
-                        ((double) admin.getPositiveTweetTotal()/(double) admin.getTotalTweets()) * 100 + "%");
+                createPopup("Percentage of Positive Message: " +
+                        ((double) admin.getPositiveTweetTotal()/(double) admin.getTotalTweets()) * 100 + "%", 200);
             }
             else {
-                label = new JLabel("Percentage of Positive Messages: 0%");
+                createPopup("Percentage of Positive Messages: 0%", 200);
             }
-            GridBagConstraints constraints = new GridBagConstraints();
-
-            // set constraints
-            constraints.anchor = GridBagConstraints.CENTER;
-            GridBagLayout gridBagLayout = new GridBagLayout();
-            gridBagLayout.setConstraints(label, constraints);
-            frame.setLayout(gridBagLayout);
-
-            // add components
-            frame.add(label);
-            frame.setBounds(430, 160, 400, 100);
-            frame.setVisible(true);
-            frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         }
     };
 
@@ -221,6 +198,28 @@ public class AdminUIListener extends AdminUIFields {
                 UserUI instance = new UserUI();
                 instance.createUserUI();
             }
+        }
+    };
+
+    public final ActionListener actValidateNames = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            buttonActionPeformed(e);
+        }
+
+        public void buttonActionPeformed(ActionEvent e) {
+            createPopup("User IDs valid: " + Admin.getInstance().checkValiditiy(), 100);
+        }
+    };
+
+    public final ActionListener actCheckLatestUpdatedUser = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            buttonActionPeformed(e);
+        }
+
+        public void buttonActionPeformed(ActionEvent e) {
+            createPopup("Latest updated user: " + Admin.getInstance().getLatestUpdatedUser(), 200);
         }
     };
 }

@@ -50,6 +50,7 @@ public class UserUIListener extends UserUIFields {
             if (!getTweet().getText().equals("")) {
                 List<String> tweets = getCurrentUser().getTweets();
                 tweets.add(getTweet().getText());
+                getCurrentUser().setUpdateTime(System.currentTimeMillis());
                 getCurrentUser().setTweets(tweets);
                 getCurrentUser().notifyObservers();
                 getTweet().setText("");

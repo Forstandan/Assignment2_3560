@@ -7,6 +7,7 @@ import Visitor.Visitor;
 import Visitor.Element;
 import java.util.ArrayList;
 import java.util.List;
+import Admin.Admin;
 
 public class User implements UserComponent, Subject, Observer, Element {
     private UserUI UIInstance;
@@ -17,6 +18,8 @@ public class User implements UserComponent, Subject, Observer, Element {
     private List<User> following;
     private List<String> tweets;
     private List<String> feed;
+    private long creationTime;
+    private long updateTime;
 
     public User(String username, UserGroup parentGroup) {
         isOpen = false;
@@ -47,6 +50,14 @@ public class User implements UserComponent, Subject, Observer, Element {
     public List<User> getFollowing() {
         return following;
     }
+
+    public long getCreationTime() { return creationTime; }
+
+    public void setCreationTime(long creationTime) { this.creationTime = creationTime; }
+
+    public long getUpdateTime() { return updateTime; }
+
+    public void setUpdateTime(long updateTime) { this.updateTime = updateTime; }
 
     public void setIsOpen(boolean isOpen, UserUI UIInstance) {
         this.isOpen = isOpen;
@@ -97,6 +108,7 @@ public class User implements UserComponent, Subject, Observer, Element {
 
             // get latest tweet
             feed.add(tweets.get(tweets.size()-1));
+            setUpdateTime(System.currentTimeMillis());
         }
     }
 
@@ -108,6 +120,11 @@ public class User implements UserComponent, Subject, Observer, Element {
 
     // visitor pattern
     public void accept(Visitor visitor) {
-        visitor.visitUser(this);
+        if (visitor instanceof Admin && !Admin.getInstance().isCheckingValidity()) {
+            visitor.visitUser(this);
+        }
+        else {
+            visitor.visitUserComponent(this);
+        }
     }
 }

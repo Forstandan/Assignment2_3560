@@ -3,8 +3,8 @@ package Admin;
 import Follow.Observer;
 import Follow.Subject;
 import UI.AdminUI;
-import User.UserGroup;
-import User.User;
+import UI.UserUI;
+import User.*;
 import Visitor.Visitor;
 
 import java.util.*;
@@ -17,6 +17,9 @@ public class Admin implements Visitor, Observer {
     private Set<UserGroup> groupSet;
     private int totalTweets;
     private int positiveTweetTotal;
+    private boolean isCheckingValidity = false;
+    private boolean containsValidNames = true;
+    private String latestUpdatedUser;
 
     private Admin() {
         userSet = new HashSet<>();
@@ -42,6 +45,12 @@ public class Admin implements Visitor, Observer {
         return instance;
     }
 
+    public boolean isCheckingValidity() {
+        return isCheckingValidity;
+    }
+
+    public String getLatestUpdatedUser() { return latestUpdatedUser; }
+
     public int getTotalTweets() {
         return totalTweets;
     }
@@ -49,6 +58,7 @@ public class Admin implements Visitor, Observer {
     public int getPositiveTweetTotal() {
         return positiveTweetTotal;
     }
+
     public int getNumOfUsers() {
         return userSet.size();
     }
@@ -62,6 +72,9 @@ public class Admin implements Visitor, Observer {
     public User createUser(UserGroup parentGroup, String username) {
         if (!nameIsTaken(username)) {
             User newUser = new User(username, parentGroup);
+            newUser.setCreationTime(System.currentTimeMillis());
+            newUser.setUpdateTime(System.currentTimeMillis());
+            latestUpdatedUser = newUser.getID();
             userSet.add(newUser);
 
             parentGroup.addMember(newUser);
@@ -89,8 +102,25 @@ public class Admin implements Visitor, Observer {
         return false;
     }
 
+    public boolean checkValiditiy() {
+        containsValidNames = true;
+        isCheckingValidity = true;
+
+        for (User user : userSet) {
+            user.accept(this);
+        }
+        for (UserGroup userGroup : groupSet) {
+            userGroup.accept(this);
+        }
+
+        isCheckingValidity = false;
+        return containsValidNames;
+    }
+
     public UserGroup createGroup(UserGroup parentGroup, String groupname) {
         UserGroup newGroup = new UserGroup(groupname, parentGroup);
+        newGroup.setCreationTime(System.currentTimeMillis());
+        newGroup.setUpdateTime(System.currentTimeMillis());
         groupSet.add(newGroup);
 
         parentGroup.addMember(newGroup);
@@ -110,6 +140,12 @@ public class Admin implements Visitor, Observer {
             positiveTweetTotal++;
         }
     }
+
+    public void visitUserComponent(UserComponent userComponent) {
+        if (userComponent.getID().contains(" ")) {
+            containsValidNames = false;
+        }
+    }
     // visitor pattern end
 
     // Observer pattern
@@ -117,6 +153,9 @@ public class Admin implements Visitor, Observer {
         if (subject instanceof User) {
             totalTweets++;
             ((User) subject).accept(this);
+        }
+        else if (subject instanceof UserUI) {
+            latestUpdatedUser = ((UserUI) subject).getCurrentUser().getID();
         }
     }
     // Observer pattern end

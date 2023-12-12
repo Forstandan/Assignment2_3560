@@ -1,8 +1,6 @@
 package UI;
 
-import UI.Listeners.AdminUIListener;
-import User.UserComponent;
-
+import User.*;
 import javax.swing.*;
 import javax.swing.tree.*;
 import java.awt.*;
@@ -49,10 +47,12 @@ public class AdminUI extends AdminUIListener {
 
     public void createAdminView() {
         /* creating panels */
+        GridBagLayout gridBagLayout = new GridBagLayout();
+
         JPanel treePanel = new JPanel();
         treePanel.setBackground(Color.blue);
-        treePanel.setBounds(0, 0, 200, 230);
-        treePanel.setLayout(new BorderLayout());
+        treePanel.setBounds(0, 0, 200, 290);
+        treePanel.setLayout(gridBagLayout);
 
         JPanel upperSubPanel = new JPanel();
         upperSubPanel.setBackground(Color.red);
@@ -61,7 +61,6 @@ public class AdminUI extends AdminUIListener {
 
         JPanel leftVerticalSubPanel = new JPanel();
         leftVerticalSubPanel.setBackground(Color.DARK_GRAY);
-        GridBagLayout gridBagLayout = new GridBagLayout();
         leftVerticalSubPanel.setLayout(gridBagLayout);
 
         JPanel rightVerticalSubPanel = new JPanel();
@@ -78,7 +77,7 @@ public class AdminUI extends AdminUIListener {
 
         JPanel lowerSubPanel = new JPanel();
         lowerSubPanel.setBackground(Color.green);
-        lowerSubPanel.setBounds(200, 150, 400, 80);
+        lowerSubPanel.setBounds(200, 150, 400, 110);
         lowerSubPanel.setLayout(new GridLayout());
 
         JPanel midSubPanel = new JPanel();
@@ -161,6 +160,20 @@ public class AdminUI extends AdminUIListener {
         positiveMessagePercentButton.setForeground(Color.WHITE);
         positiveMessagePercentButton.setPreferredSize(new Dimension(400, 30));
 
+        JButton validate = new JButton("Validate name");
+        validate.addActionListener(adminUIListenerInstance.actValidateNames);
+        validate.setBorderPainted(false);
+        validate.setBackground(Color.gray);
+        validate.setForeground(Color.white);
+        validate.setPreferredSize(new Dimension(400, 30));
+
+        JButton lastUpdated = new JButton("Most Recently Updated User");
+        lastUpdated.addActionListener(adminUIListenerInstance.actCheckLatestUpdatedUser);
+        lastUpdated.setBorderPainted(false);
+        lastUpdated.setBackground(Color.gray);
+        lastUpdated.setForeground(Color.white);
+        lastUpdated.setPreferredSize(new Dimension(400, 30));
+
         /* tree view */
         DefaultMutableTreeNode treeRoot = new DefaultMutableTreeNode("Root");
         setTreeRoot(treeRoot);
@@ -171,6 +184,7 @@ public class AdminUI extends AdminUIListener {
         setTreeModel(treeModel);
 
         JTree tree = new JTree(treeModel);
+        tree.setPreferredSize(new Dimension(200, 290));
         tree.setCellRenderer(new CustomTreeCellRenderer());
         tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         setTree(tree);
@@ -197,7 +211,7 @@ public class AdminUI extends AdminUIListener {
         JFrame frame = new JFrame();
         frame.setBackground(Color.LIGHT_GRAY);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(610, 260);
+        frame.setSize(610, 290);
         frame.setLayout(null);
         frame.setVisible(true);
 
@@ -210,6 +224,9 @@ public class AdminUI extends AdminUIListener {
         gridBagLayout.setConstraints(groupTotalButton, constraintsGroupTotalButton);
         gridBagLayout.setConstraints(userID, constraintsUserID);
         gridBagLayout.setConstraints(groupID, constraintsGroupID);
+        gridBagLayout.setConstraints(tree, constraintsTreeView);
+        gridBagLayout.setConstraints(validate, constraintsValidateButton);
+        gridBagLayout.setConstraints(lastUpdated, constraintsLatestUpdated);
 
         rightVerticalSubPanel.add(addUserButton);
         rightVerticalSubPanel.add(addGroupButton);
@@ -220,8 +237,10 @@ public class AdminUI extends AdminUIListener {
         midSubPanel.add(userViewButton);
         bottomLeftVerticalSubPanel.add(userTotalButton);
         bottomLeftVerticalSubPanel.add(totalMessagesButton);
+        bottomLeftVerticalSubPanel.add(validate);
         bottomRightVerticalSubPanel.add(groupTotalButton);
         bottomRightVerticalSubPanel.add(positiveMessagePercentButton);
+        bottomRightVerticalSubPanel.add(lastUpdated);
         lowerSubPanel.add(bottomLeftVerticalSubPanel);
         lowerSubPanel.add(bottomRightVerticalSubPanel);
         treePanel.add(tree);

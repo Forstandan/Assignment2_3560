@@ -38,6 +38,13 @@ public class UserUIFields {
             new Insets(15, 0, 15, 10), 0, 0
     );
 
+    public final static GridBagConstraints constraintsUserCreationTime = new GridBagConstraints(
+            0, 0, 1, 1,  1, 1,
+            GridBagConstraints.PAGE_END, GridBagConstraints.NONE,
+            new Insets(15, 0, 15, 10), 0, 0
+    );
+
+
     public JTextField getUserID() {
         return userID;
     }

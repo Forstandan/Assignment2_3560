@@ -3,12 +3,21 @@ package UI;
 import Follow.Observer;
 import Follow.Subject;
 import User.*;
-
+import Admin.Admin;
 import javax.swing.*;
 import java.awt.*;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-public class UserUI extends UserUIListener implements Observer {
+public class UserUI extends UserUIListener implements Observer, Subject {
+    private JLabel lastUpdated;
+    private final List<Observer> observerList = new ArrayList<>();
+
+    public User getCurrentUser() {
+        return super.getCurrentUser();
+    }
 
     private static DefaultListModel<String> updateFollowerList(User user, DefaultListModel<String> listModel) {
         listModel.clear();
@@ -35,11 +44,14 @@ public class UserUI extends UserUIListener implements Observer {
 
     public void update(Subject subject) {
         List<String> updatedFeed = ((User) subject).getFeed();
+        notifyObservers();
+        setLastUpdated();
         getFeedListModel().insertElementAt(updatedFeed.get(updatedFeed.size() - 1), getFeedList().getSelectedIndex() + 1);
     }
 
     public void createUserUI() {
         User currentUser = (User) AdminUI.getCurrentComponent();
+        attachObserver(Admin.getInstance());
         currentUser.setIsOpen(true, this);
         setCurrentUser(currentUser);
 
@@ -61,6 +73,11 @@ public class UserUI extends UserUIListener implements Observer {
         lowerPanel.setBounds(0, 250, 380, 160);
         lowerPanel.setLayout(new BorderLayout());
 
+        JPanel latestUpdatedPanel = new JPanel();
+        latestUpdatedPanel.setBackground(Color.LIGHT_GRAY);
+        latestUpdatedPanel.setBounds(0, 410, 380, 30);
+        latestUpdatedPanel.setLayout(gridBagLayout);
+
         JPanel upperWidgetPanel = new JPanel();
         upperWidgetPanel.setBackground(Color.LIGHT_GRAY);
         upperWidgetPanel.setPreferredSize(new Dimension(300, 60));
@@ -80,6 +97,7 @@ public class UserUI extends UserUIListener implements Observer {
         currentUserPanel.setBackground(Color.DARK_GRAY);
         currentUserPanel.setLayout(gridBagLayout);
         currentUserPanel.setBounds(0, 0, 200, 100);
+        currentUserPanel.setLayout(gridBagLayout);
 
         /* create components */
         JTextField userID = new JTextField();
@@ -90,6 +108,18 @@ public class UserUI extends UserUIListener implements Observer {
         currentUserID.setText("@" + currentUser.getID());
         currentUserID.setFont(new Font("Arial", Font.ITALIC, 30));
         currentUserID.setForeground(Color.WHITE);
+
+        lastUpdated = new JLabel();
+        SimpleDateFormat format = new SimpleDateFormat("hh:mm:ss dd MMMM, yyyy");
+        lastUpdated.setText("Last updated " + format.format(currentUser.getUpdateTime()));
+        lastUpdated.setFont(new Font("Arial", Font.PLAIN, 10));
+        lastUpdated.setForeground(Color.white);
+
+        JLabel userCreationTime = new JLabel();
+        format = new SimpleDateFormat("dd/MM/yy");
+        userCreationTime.setText("Account created on " + format.format(new Date(currentUser.getCreationTime())));
+        userCreationTime.setFont(new Font("Arial", Font.ITALIC, 10));
+        userCreationTime.setForeground(Color.WHITE);
 
         JButton followUserButton = new JButton("Follow User");
         followUserButton.addActionListener(actFollowUser);
@@ -122,7 +152,7 @@ public class UserUI extends UserUIListener implements Observer {
 
         /* create frame and add components */
         JFrame frame = new JFrame("user view");
-        frame.setBounds(500, 0, 390, 450);
+        frame.setBounds(500, 0, 390, 480);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         frame.setLayout(null);
@@ -131,6 +161,7 @@ public class UserUI extends UserUIListener implements Observer {
         gridBagLayout.setConstraints(userID, constraintsUserID);
         gridBagLayout.setConstraints(tweet, constraintsTweetTextField);
         gridBagLayout.setConstraints(postTweetButton, constraintsPostTweet);
+        gridBagLayout.setConstraints(userCreationTime, constraintsUserCreationTime);
 
         upperWidgetPanel.add(userID);
         upperWidgetPanel.add(followUserButton);
@@ -139,6 +170,9 @@ public class UserUI extends UserUIListener implements Observer {
         lowerWidgetPanel.add(postTweetButton);
 
         currentUserPanel.add(currentUserID);
+        currentUserPanel.add(userCreationTime);
+
+        latestUpdatedPanel.add(lastUpdated);
 
         followerPanel.add(followerList);
 
@@ -150,6 +184,26 @@ public class UserUI extends UserUIListener implements Observer {
         frame.add(upperPanel);
         frame.add(followerPanel);
         frame.add(lowerPanel);
+        frame.add(latestUpdatedPanel);
+    }
+
+    public void attachObserver(Observer observer) {
+        observerList.add(observer);
+    }
+
+    public void detachObserver(Observer observer) {
+        observerList.remove(observer);
+    }
+
+    public void notifyObservers() {
+        for (Observer observer : observerList) {
+            observer.update(this);
+        }
+    }
+
+    private void setLastUpdated() {
+        SimpleDateFormat format = new SimpleDateFormat("hh:mm:ss dd MMMM, yyyy");
+        lastUpdated.setText("Last updated: " + format.format(getCurrentUser().getUpdateTime()));
     }
 }
 
